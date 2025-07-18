@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ColorConverter • API POC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>ColorConverter</h1>
+
+    <label>Nom d'utilisateur :</label>
+    <input type="text" id="username" placeholder="ex. jason_admin" value="jason_admin">
+
+    <label>Mot de passe :</label>
+    <input type="password" id="password" placeholder="ex. MyPass_w0rd" value="MyPass_w0rd">
+
+    <button onclick="login()">🔐 Se connecter</button>
+    <div id="authStatus"></div>
+
+    <hr style="margin: 2rem 0;">
+
+    <label>Format d’entrée :</label>
+    <select id="inputFormat">
+        <option value="hex">HEX</option>
+        <option value="rgb">RGB</option>
+    </select>
+
+    <label>Valeur de couleur :</label>
+    <input type="text" id="colorValue" placeholder="#ffcc00 ou rgb(255,255,0)">
+
+    <label>Format de sortie :</label>
+    <select id="outputFormat">
+        <option value="rgb">RGB</option>
+        <option value="hex">HEX</option>
+        <option value="cmyk">CMYK</option>
+        <option value="hsl">HSL</option>
+        <option value="lab">LAB</option>
+    </select>
+
+    <button onclick="convertColor()">🎨 Convertir</button>
+
+    <div class="result" id="conversionResult"></div>
+    <div id="colorPreview" class="color-box" title="Cliquer pour copier"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

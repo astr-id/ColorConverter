@@ -1,0 +1,122 @@
+:root {
+    --primary: #2e86de;
+    --secondary: #48dbfb;
+    --bg: #f5f6fa;
+    --dark: #222f3e;
+    --light: #fff;
+    --danger: #e74c3c;
+    --success: #27ae60;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 4rem auto;
+    background-color: var(--light);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+h1 {
+    text-align: center;
+    color: var(--primary);
+}
+
+label {
+    display: block;
+    margin: 1rem 0 0.3rem;
+    font-weight: bold;
+}
+
+input, select, button {
+    width: 100%;
+    padding: 0.6rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+button {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 1rem;
+}
+
+button:hover {
+    background-color: var(--dark);
+}
+
+.result {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background-color: #ecf0f1;
+    border-left: 4px solid var(--primary);
+    font-family: monospace;
+}
+
+.alert {
+    padding: 0.75rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.alert-success { background-color: var(--success); color: white; }
+.alert-danger { background-color: var(--danger); color: white; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.color-box {
+    width: 80px;
+    height: 80px;
+    margin-top: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out;
+}
+.color-box {
+    width: 80px;
+    height: 80px;
+    margin-top: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    background-color: transparent;
+    transition: background-color 0.3s ease-in-out, transform 0.2s;
+    cursor: pointer;
+    position: relative;
+}
+
+.color-box:hover {
+    transform: scale(1.05);
+}
+
+.color-box::after {
+    content: "Copié !";
+    position: absolute;
+    bottom: -25px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--success);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.color-box.copied::after {
+    opacity: 1;
+}
