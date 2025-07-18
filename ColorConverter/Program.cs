@@ -5,7 +5,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 using ColorConverter.Data; // <-- Ton namespace
-using ColorConverter.Services; // <-- Si tu veux enregistrer des services métier
+using ColorConverter.Services; // <-- Si tu veux enregistrer des services mï¿½tier
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,7 +71,7 @@ builder.Services.AddSwaggerGen(options =>
     {
         Version = "v1",
         Title = "ColorConverter API",
-        Description = "Une API pour convertir des couleurs entre différents formats (HEX, RGB, HSL, LAB, etc.)",
+        Description = "Une API pour convertir des couleurs entre differents formats (HEX, RGB, HSL, LAB, etc.)",
         TermsOfService = new Uri("https://google.com"),
         Contact = new OpenApiContact
         {
@@ -81,7 +81,7 @@ builder.Services.AddSwaggerGen(options =>
         }
     });
 
-    // Ajout des commentaires XML (si activés dans .csproj)
+    // Ajout des commentaires XML (si activï¿½s dans .csproj)
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     options.IncludeXmlComments(xmlPath);
