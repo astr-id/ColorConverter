@@ -58,9 +58,9 @@ dotnet run
   ```
 
 - Les routes protégées sont :
+  - `POST /api/color/convert/`
   - `GET /api/color/history`
   - `DELETE /api/color/history/{id}`
-  - `DELETE /api/color/convert/`
 
 ## Membre du projet
 
