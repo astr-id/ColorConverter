@@ -1,0 +1,6 @@
+@ColorConverter_HostAddress = http://localhost:5104
+
+GET {{ColorConverter_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
