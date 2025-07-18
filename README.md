@@ -6,8 +6,8 @@
 ## Fonctionnalités
 
 -  Conversions de couleur :
-  - HEX ↔ RGB
-  - RGB → HSL, CMYK, LAB
+    - HEX ↔ RGB
+    - RGB → HSL, CMYK, LAB
 -  Authentification JWT (compte de test inclus)
 -  Architecture propre : Controllers, Services, DTOs
 -  Base InMemory pour l’historique des conversions
