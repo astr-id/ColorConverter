@@ -8,41 +8,51 @@
 </head>
 <body>
 <div class="container">
-    <h1>ColorConverter</h1>
+    <div class="auth-section">
+        <div class="auth-row">
+            <div class="auth-fields">
+                <div class="auth-field">
+                    <label>Nom d'utilisateur :</label>
+                    <input type="text" id="username" placeholder="ex. jason_admin" value="jason_admin">
+                </div>
+                <div class="auth-field">
+                    <label>Mot de passe :</label>
+                    <input type="password" id="password" placeholder="ex. MyPass_w0rd" value="MyPass_w0rd">
+                </div>
+                <button class="small-btn" onclick="login()">Se connecter</button>
+            </div>
+        </div>
+        <div id="authStatus"></div>
+    
 
-    <label>Nom d'utilisateur :</label>
-    <input type="text" id="username" placeholder="ex. jason_admin" value="jason_admin">
+    <div class="converter-section">
+        <h1>ColorConverter</h1>
+</div>
+        <label>Format d'entrée :</label>
+        <select id="inputFormat">
+            <option value="hex">HEX</option>
+            <option value="rgb">RGB</option>
+        </select>
 
-    <label>Mot de passe :</label>
-    <input type="password" id="password" placeholder="ex. MyPass_w0rd" value="MyPass_w0rd">
+        <label>Valeur de couleur :</label>
+        <input type="text" id="colorValue" placeholder="#ffcc00 ou rgb(255,255,0)">
 
-    <button onclick="login()">🔐 Se connecter</button>
-    <div id="authStatus"></div>
+        <label>Format de sortie :</label>
+        <select id="outputFormat">
+            <option value="rgb">RGB</option>
+            <option value="hex">HEX</option>
+            <option value="cmyk">CMYK</option>
+            <option value="hsl">HSL</option>
+            <option value="lab">LAB</option>
+        </select>
 
-    <hr style="margin: 2rem 0;">
+        <button onclick="convertColor()">🎨 Convertir</button>
 
-    <label>Format d’entrée :</label>
-    <select id="inputFormat">
-        <option value="hex">HEX</option>
-        <option value="rgb">RGB</option>
-    </select>
-
-    <label>Valeur de couleur :</label>
-    <input type="text" id="colorValue" placeholder="#ffcc00 ou rgb(255,255,0)">
-
-    <label>Format de sortie :</label>
-    <select id="outputFormat">
-        <option value="rgb">RGB</option>
-        <option value="hex">HEX</option>
-        <option value="cmyk">CMYK</option>
-        <option value="hsl">HSL</option>
-        <option value="lab">LAB</option>
-    </select>
-
-    <button onclick="convertColor()">🎨 Convertir</button>
-
-    <div class="result" id="conversionResult"></div>
-    <div id="colorPreview" class="color-box" title="Cliquer pour copier"></div>
+        <div class="result-container">
+            <div class="result" id="conversionResult"></div>
+            <div id="colorPreview" class="color-box" title="Cliquer pour copier"></div>
+        </div>
+    </div>
 </div>
 
 <script src="script.js"></script>
