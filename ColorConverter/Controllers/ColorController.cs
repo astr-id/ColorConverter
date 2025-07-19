@@ -27,6 +27,8 @@ namespace ColorConverter.Controllers
         /// <summary>
         /// Convertit une couleur d’un format à un autre.
         /// </summary>
+        /// <param name="request"></param> 
+        /// <returns></returns>
         [HttpPost("convert")]
         [Authorize]
         [ProducesResponseType(typeof(ColorResponseDto), 200)]
@@ -48,8 +50,9 @@ namespace ColorConverter.Controllers
         }
 
         /// <summary>
-        /// Récupère l’historique des conversions.
+        /// Retourne l’historique des conversions de couleurs.
         /// </summary>
+        /// <returns></returns>
         [HttpGet("history")]
         [Authorize]
         [ProducesResponseType(typeof(IEnumerable<ColorConversion>), 200)]
@@ -63,8 +66,10 @@ namespace ColorConverter.Controllers
         }
 
         /// <summary>
-        /// Supprime une entrée de l’historique par ID.
+        /// Supprime une entrée de l’historique des conversions.
         /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("history/{id}")]
         [Authorize]
         [ProducesResponseType(200)]

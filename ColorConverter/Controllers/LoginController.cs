@@ -17,7 +17,13 @@ namespace ColorConverter.Controllers
         {
             _configuration = configuration;
         }
-
+        /// <summary>
+        /// Authentifie un utilisateur et génère un JWT.
+        /// </summary>
+        /// <param name="userLogin"></param>
+        /// <returns></returns>
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
         [HttpPost("login")]
         public IActionResult Login(UserLogin userLogin)
         {
