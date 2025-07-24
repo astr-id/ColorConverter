@@ -1,7 +1,7 @@
 ﻿using ColorConverter.Data;
 using ColorConverter.DTOs;
 using ColorConverter.Models;
-using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace ColorConverter.Services
 {
@@ -18,36 +18,31 @@ namespace ColorConverter.Services
         {
             if (request.InputFormat == "hex")
             {
-                var (r, g, b) = ColorConversionHelper.HexToRgb(request.ColorValue);
-
-                string result;
-
-                switch (request.OutputFormat)
+                if (!Regex.IsMatch(request.ColorValue, @"^#([A-Fa-f0-9]{6})$"))
                 {
-                    case "rgb":
-                        result = $"rgb({r}, {g}, {b})";
-                        break;
-                    case "cmyk":
-                        var (c, m, y, k) = ColorConversionHelper.RgbToCmyk(r, g, b);
-                        result = $"cmyk({c:F2}, {m:F2}, {y:F2}, {k:F2})";
-                        break;
-                    case "hsl":
-                        var (h, s, l) = ColorConversionHelper.RgbToHsl(r, g, b);
-                        result = $"hsl({h:F1}°, {s:F1}%, {l:F1}%)";
-                        break;
-                    case "lab":
-                        var (L, A, B) = ColorConversionHelper.RgbToLab(r, g, b);
-                        result = $"lab({L:F1}, {A:F1}, {B:F1})";
-                        break;
-                    default:
-                        throw new NotSupportedException("Format de sortie non supporté");
+                    throw new NotSupportedException("Format hexadécimal invalide. Le format attendu est #RRGGBB.");
                 }
 
-                return FormatResponse(request, result);
+                var (r, g, b) = ColorConversionHelper.HexToRgb(request.ColorValue);
 
+                string result = request.OutputFormat switch
+                {
+                    "rgb" => $"rgb({r}, {g}, {b})",
+                    "cmyk" => FormatCmyk(ColorConversionHelper.RgbToCmyk(r, g, b)),
+                    "hsl" => FormatHsl(ColorConversionHelper.RgbToHsl(r, g, b)),
+                    "lab" => FormatLab(ColorConversionHelper.RgbToLab(r, g, b)),
+                    _ => throw new NotSupportedException("Format de sortie non supporté")
+                };
+
+                return FormatResponse(request, result);
             }
             else if (request.InputFormat == "rgb")
             {
+                if (!Regex.IsMatch(request.ColorValue, @"^rgb\(\d{1,3},\s*\d{1,3},\s*\d{1,3}\)$"))
+                {
+                    throw new NotSupportedException("Format RGB invalide. Le format attendu est rgb(255, 0, 0).");
+                }
+
                 var values = request.ColorValue
                     .Replace("rgb(", "")
                     .Replace(")", "")
@@ -57,28 +52,14 @@ namespace ColorConverter.Services
 
                 int r = values[0], g = values[1], b = values[2];
 
-                string result;
-
-                switch (request.OutputFormat)
+                string result = request.OutputFormat switch
                 {
-                    case "hex":
-                        result = ColorConversionHelper.RgbToHex(r, g, b);
-                        break;
-                    case "cmyk":
-                        var (c, m, y, k) = ColorConversionHelper.RgbToCmyk(r, g, b);
-                        result = $"cmyk({c:F2}, {m:F2}, {y:F2}, {k:F2})";
-                        break;
-                    case "hsl":
-                        var (h, s, l) = ColorConversionHelper.RgbToHsl(r, g, b);
-                        result = $"hsl({h:F1}°, {s:F1}%, {l:F1}%)";
-                        break;
-                    case "lab":
-                        var (L, A, B) = ColorConversionHelper.RgbToLab(r, g, b);
-                        result = $"lab({L:F1}, {A:F1}, {B:F1})";
-                        break;
-                    default:
-                        throw new NotSupportedException("Format de sortie non supporté");
-                }
+                    "hex" => ColorConversionHelper.RgbToHex(r, g, b),
+                    "cmyk" => FormatCmyk(ColorConversionHelper.RgbToCmyk(r, g, b)),
+                    "hsl" => FormatHsl(ColorConversionHelper.RgbToHsl(r, g, b)),
+                    "lab" => FormatLab(ColorConversionHelper.RgbToLab(r, g, b)),
+                    _ => throw new NotSupportedException("Format de sortie non supporté")
+                };
 
                 return FormatResponse(request, result);
             }
@@ -87,6 +68,16 @@ namespace ColorConverter.Services
                 throw new NotSupportedException("Format d’entrée non supporté");
             }
         }
+
+        private string FormatCmyk((double c, double m, double y, double k) cmyk) =>
+    $"cmyk({cmyk.c:F2}, {cmyk.m:F2}, {cmyk.y:F2}, {cmyk.k:F2})";
+
+        private string FormatHsl((double h, double s, double l) hsl) =>
+            $"hsl({hsl.h:F1}°, {hsl.s:F1}%, {hsl.l:F1}%)";
+
+        private string FormatLab((double L, double A, double B) lab) =>
+            $"lab({lab.L:F1}, {lab.A:F1}, {lab.B:F1})";
+
 
         private ColorResponseDto FormatResponse(ColorRequestDto request, string result)
         {

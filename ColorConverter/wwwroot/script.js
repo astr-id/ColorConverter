@@ -32,6 +32,20 @@ async function convertColor() {
 
     const resultDiv = document.getElementById("conversionResult");
 
+    // Validation côté client avant envoi au backend
+    const isHex = /^#([A-Fa-f0-9]{6})$/.test(payload.colorValue.trim());
+    const isRgb = /^rgb\(\d+,\s*\d+,\s*\d+\)$/.test(payload.colorValue.trim());
+
+    if (payload.inputFormat === "hex" && !isHex) {
+        resultDiv.innerHTML = `<div class="alert alert-warning">Le format hexadécimal attendu est du type #RRGGBB.</div>`;
+        return;
+    }
+
+    if (payload.inputFormat === "rgb" && !isRgb) {
+        resultDiv.innerHTML = `<div class="alert alert-warning">Le format RGB attendu est du type rgb(255, 0, 0).</div>`;
+        return;
+    }
+
     const response = await fetch("/api/color/convert", {
         method: "POST",
         headers: {
@@ -45,7 +59,6 @@ async function convertColor() {
         const data = await response.json();
         resultDiv.innerHTML = `<strong>Résultat :</strong><br>${data.result}`;
 
-        // Appliquer couleur si le format est utilisable en CSS
         const previewBox = document.getElementById("colorPreview");
         const cssColor = parseToCssColor(data.result);
 
@@ -54,10 +67,17 @@ async function convertColor() {
         } else {
             previewBox.style.backgroundColor = "transparent";
         }
+    } else if (response.status === 401) {
+        resultDiv.innerHTML = `<div class="alert alert-warning">Veuillez vous connecter pour effectuer une conversion.</div>`;
+    } else if (response.status === 400) {
+        const error = await response.json();
+        resultDiv.innerHTML = `<div class="alert alert-danger">Erreur : ${error.error || "Requête invalide."}</div>`;
     } else {
-        resultDiv.innerHTML = `<div class="alert alert-danger">Erreur de conversion.</div>`;
+        resultDiv.innerHTML = `<div class="alert alert-danger">Une erreur inattendue est survenue (${response.status}).</div>`;
     }
 }
+
+
 
 // Fonction utilitaire déclarée en dehors
 function parseToCssColor(value) {

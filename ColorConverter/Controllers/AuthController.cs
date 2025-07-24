@@ -10,9 +10,15 @@ namespace ColorConverter.Controllers
     public class AuthController : ControllerBase
     {
         /// <summary>
-        /// Récupère le profil de l'utilisateur authentifié.
+        /// Retourne le profil de l'utilisateur connecté.
         /// </summary>
-        /// <returns></returns>
+        /// <remarks>
+        /// Nécessite un token JWT valide.
+        /// Retourne le nom d'utilisateur et l'email extraits des claims.
+        /// </remarks>
+        /// <returns>Objet contenant le nom d'utilisateur et l'email</returns>
+        /// <response code="200">Profil récupéré avec succès</response>
+        /// <response code="401">Utilisateur non authentifié</response>
         [HttpGet("profile")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]

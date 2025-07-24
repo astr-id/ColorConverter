@@ -293,7 +293,7 @@ button:active {
     border-left-color: var(--sunset-yellow);
 }
 
-.alert-danger {
+.alert-danger, .alert-warning {
     background: linear-gradient(135deg, #fed7d7 0%, #feb2b2 100%);
     color: var(--text-dark);
     border-left-color: var(--sunset-red);

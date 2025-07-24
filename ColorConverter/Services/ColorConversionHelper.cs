@@ -5,6 +5,7 @@ namespace ColorConverter.Services
 {
     public static class ColorConversionHelper
     {
+        // Hex vers RGB
         public static (int R, int G, int B) HexToRgb(string hex)
         {
             hex = hex.TrimStart('#');
@@ -14,11 +15,13 @@ namespace ColorConverter.Services
             return (r, g, b);
         }
 
+        // RGB vers Hex
         public static string RgbToHex(int r, int g, int b)
         {
             return $"#{r:X2}{g:X2}{b:X2}";
         }
 
+        // RGB vers CMYK
         public static (double C, double M, double Y, double K) RgbToCmyk(int r, int g, int b)
         {
             double rd = r / 255.0, gd = g / 255.0, bd = b / 255.0;
@@ -29,6 +32,7 @@ namespace ColorConverter.Services
             return (c, m, y, k);
         }
 
+        // RGB vers HSL
         public static (double H, double S, double L) RgbToHsl(int r, int g, int b)
         {
             double rd = r / 255.0, gd = g / 255.0, bd = b / 255.0;
@@ -54,9 +58,9 @@ namespace ColorConverter.Services
             return (h, s * 100, l * 100);
         }
 
+        // RGB vers LAB
         public static (double L, double A, double B) RgbToLab(int r, int g, int b)
         {
-            // Convert RGB to XYZ
             double[] rgb = { r / 255.0, g / 255.0, b / 255.0 };
             for (int i = 0; i < 3; i++)
                 rgb[i] = rgb[i] > 0.04045 ? Math.Pow((rgb[i] + 0.055) / 1.055, 2.4) : rgb[i] / 12.92;

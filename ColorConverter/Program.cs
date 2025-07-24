@@ -4,8 +4,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
-using ColorConverter.Data; // <-- Ton namespace
-using ColorConverter.Services; // <-- Si tu veux enregistrer des services m�tier
+using ColorConverter.Data; 
+using ColorConverter.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

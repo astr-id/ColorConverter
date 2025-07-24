@@ -18,10 +18,12 @@ namespace ColorConverter.Controllers
             _configuration = configuration;
         }
         /// <summary>
-        /// Authentifie un utilisateur et génère un JWT.
+        /// Permet à un utilisateur de se connecter et d'obtenir un token.
         /// </summary>
-        /// <param name="userLogin"></param>
-        /// <returns></returns>
+        /// <param name="userLogin">Nom d'utilisateur et mot de passe</param>
+        /// <returns>Un JWT si les identifiants sont bons</returns>
+        /// <response code="200">Connexion réussie</response>
+        /// <response code="401">Identifiants incorrects</response>
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [HttpPost("login")]

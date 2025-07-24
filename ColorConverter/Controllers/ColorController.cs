@@ -4,10 +4,6 @@ using ColorConverter.Models;
 using ColorConverter.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace ColorConverter.Controllers
 {
@@ -25,10 +21,12 @@ namespace ColorConverter.Controllers
         }
 
         /// <summary>
-        /// Convertit une couleur d’un format à un autre.
+        /// Convertit une couleur d’un format vers un autre.
         /// </summary>
-        /// <param name="request"></param> 
-        /// <returns></returns>
+        /// <param name="request">Objet contenant la couleur et les formats</param>
+        /// <returns>La couleur convertie</returns>
+        /// <response code="200">Conversion réussie</response>
+        /// <response code="400">Format non supporté ou données invalides</response>
         [HttpPost("convert")]
         [Authorize]
         [ProducesResponseType(typeof(ColorResponseDto), 200)]
@@ -50,9 +48,10 @@ namespace ColorConverter.Controllers
         }
 
         /// <summary>
-        /// Retourne l’historique des conversions de couleurs.
+        /// Récupère l’historique des conversions enregistrées.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Liste des conversions</returns>
+        /// <response code="200">Historique récupéré avec succès</response>
         [HttpGet("history")]
         [Authorize]
         [ProducesResponseType(typeof(IEnumerable<ColorConversion>), 200)]
@@ -66,10 +65,12 @@ namespace ColorConverter.Controllers
         }
 
         /// <summary>
-        /// Supprime une entrée de l’historique des conversions.
+        /// Supprime une conversion de l’historique.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">Identifiant de la conversion</param>
+        /// <returns>Statut de la suppression</returns>
+        /// <response code="200">Suppression réussie</response>
+        /// <response code="404">Conversion non trouvée</response>
         [HttpDelete("history/{id}")]
         [Authorize]
         [ProducesResponseType(200)]
